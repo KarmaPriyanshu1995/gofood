@@ -4,9 +4,15 @@ const port = 5000
 const Category = require ("./models/itemcategory.model")
 const foodItem = require("./foodData2")
 const mongoDB =require('./db')
+const cors =require ('cors')
 mongoDB()
+app.use(cors())
 
-
+// app.use((req, res, next) =>  {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000/");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 app.get('/category-add', async (req, res) => {
 for(let i=0; i< foodItem.data.length;i++) {
