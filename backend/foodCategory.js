@@ -1,4 +1,4 @@
-[
+const foodCategory=[
     {
         "CategoryName": "Biryani/Rice"
     },
@@ -9,3 +9,6 @@
         "CategoryName": "Pizza"
     }
 ]
+module.exports = {
+    foodCategory
+}

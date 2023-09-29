@@ -2,7 +2,9 @@ const express = require('express')
 const app = express()
 const port = 5000
 const Category = require ("./models/itemcategory.model")
+const FoodCategory = require("./models/foodcategory.model")
 const foodItem = require("./foodData2")
+const foodCatalog =require("./foodCategory")
 const mongoDB =require('./db')
 const cors =require ('cors')
 mongoDB()
@@ -22,6 +24,19 @@ for(let i=0; i< foodItem.data.length;i++) {
 })
 app.get('/category', async (req, res) => {
   const allCategory = await Category.find({});
+  res.json({
+    msg: "All Category",
+    data: allCategory
+  })
+})
+app.get('/foodcategory-add', async (req, res) => {
+  for(let i=0; i< foodCatalog.foodCategory.length;i++) {
+    await FoodCategory.create(foodCatalog.foodCategory[i])
+  }
+    res.send('Category add Successfully!')
+  })
+app.get('/foodcategory', async (req, res) => {
+  const allCategory = await FoodCategory.find({});
   res.json({
     msg: "All Category",
     data: allCategory

@@ -1,11 +1,11 @@
 import React from 'react'
 import pizza from '../assets/images/pizza.jpeg'
-export default function Card() {
+export default function Card(props) {
   return (
-    <div className="card ml-3" style={{"width": "18rem","maxHeight":"360px"}}>
+    <div className="card ml-3 mb-3" style={{"width": "16rem","maxHeight":"30rem"}}>
     <img src={pizza} className="card-img-top" alt="..."/>
     <div className="card-body">
-      <h5 className="card-title">Card title</h5>
+      <h5 className="card-title">{props.foodName}</h5>
       <p className="card-text">This is some important text .</p>
       <div className='container w-100'>
   <select className='m-2 h-100 bg-success text-white'>
