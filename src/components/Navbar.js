@@ -26,10 +26,10 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav me-auto mb-2">
               <li className="nav-item">
-                <Link className="nav-link active fs-5" aria-current="page" to="#">Home</Link>
+                <Link className="nav-link active fs-5" aria-current="page" to="/">Home</Link>
               </li>
               {(localStorage.getItem("authToken")) ?
-                <Link className="nav-link active fs-5" aria-current="page" to="#">My Orders</Link> : ""
+                <Link className="nav-link active fs-5" aria-current="page" to="/myOrder">My Orders</Link> : ""
               }
             </ul>
             {(!localStorage.getItem("authToken")) ? <div className='d-flex'>

@@ -17,6 +17,7 @@ export default function Card(props) {
   // }
   const handleAddToCart = async () => {
     let food = []
+    console.log('data1234>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data)
     for (const item of data) {
       if (item.id ===props.foodItems._id) {
         food = item;
@@ -45,8 +46,10 @@ export default function Card(props) {
   }
   let finalPrice =qty*parseInt(options[size])
   useEffect(()=>{
-    setSize(priceRef.current.value)
+    setSize(priceRef?.current?.value)
   },[])
+
+  
   return (
     <div className="card ml-3 mb-3" style={{ "width": "16rem", "maxHeight": "30rem" }}>
       <img src={props.foodItems.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
