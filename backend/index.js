@@ -58,6 +58,7 @@ app.post("/orderData", async (req, res) => {
       await Order.create({
         email: req.body.email,
         order_data: data,
+        order_date: req.body.order_date,
       }).then(() => {
         res.json({ success: true });
       });
@@ -69,7 +70,10 @@ app.post("/orderData", async (req, res) => {
     try {
       await Order.findOneAndUpdate(
         { email: req.body.email },
-        { $push: { order_data: data } }
+        {
+          // $push: { order_data: data },
+          $set: { order_date: req.body.order_date, order_data: [...eId?.order_data, ...data] },
+        }
       ).then(() => {
         res.json({ success: true });
       });
@@ -79,16 +83,19 @@ app.post("/orderData", async (req, res) => {
   }
 });
 
-app.post("/myorderdata",async(req,res)=>{
-  try{
-let myData = await Order.findOne({'email':req.body.email})
-res.json({orderData:myData})
-  }catch (error){
-res.send("Server Error",error.message)
+app.post("/myorderdata", async (req, res) => {
+  try {
+    let myData = await Order.findOne({ email: req.body.email });
+    res.json({
+      success: true,
+      email: myData?.email,
+      order_data: myData?.order_data,
+      order_date: myData?.order_date,
+    });
+  } catch (error) {
+    res.send("Server Error", error.message);
   }
-})
-
-
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

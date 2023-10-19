@@ -11,6 +11,10 @@ const mongoose = require('mongoose'),
             type:Array,
             require:true,
         },
+        order_date:{
+            type:Date,
+            require:true,
+        },
     })
 
 

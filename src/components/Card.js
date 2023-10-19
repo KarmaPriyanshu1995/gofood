@@ -11,10 +11,6 @@ export default function Card(props) {
   const [qty, setQty] = useState(1)
   const [size, setSize] = useState("")
   console.log("dataaaaa", data)
-  // const handleAddToCart = async (props) => {
-  //   await dispatch({ type: "ADD", id: props.foodItems._id, name: props.foodItems.name, price:finalPrice, qty: qty, size: size })
-  //   console.log("[][][][][][]", props,data)
-  // }
   const handleAddToCart = async () => {
     let food = []
     console.log('data1234>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data)
@@ -27,11 +23,11 @@ export default function Card(props) {
     }
     if (food !== []) {
       if (food.size === size) {
-        await dispatch({ type: "UPDATE", id:props.foodItems._id, price: finalPrice, qty: qty })
+        await dispatch({ type: "UPDATE", id:props.foodItems._id, price: finalPrice, qty: qty,img:props.foodItems.img })
         return
       }
       else if (food.size !== size) {
-        await dispatch({ type: "ADD", id:props.foodItems._id, name: props.foodItems.name, price:finalPrice, qty: qty, size: size })
+        await dispatch({ type: "ADD", id:props.foodItems._id, name: props.foodItems.name, price:finalPrice, qty: qty, size: size, img:props.foodItems.img })
         console.log("Size different so simply ADD one more to the list")
         return
       }

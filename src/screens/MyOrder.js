@@ -1,86 +1,71 @@
-import React, { useEffect, useState } from 'react'
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
+import React, { useEffect, useState } from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import moment from "moment/moment";
 
 export default function MyOrder() {
+  const [orderData, setorderData] = useState({});
 
-    const [orderData, setorderData] = useState({})
+  const fetchMyOrder = async () => {
+    console.log(localStorage.getItem("userEmail"));
+    await fetch("http://localhost:5000/myorderdata", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: localStorage.getItem("userEmail"),
+      }),
+    }).then(async (res) => {
+      let response = await res.json();
+      await setorderData(response);
+    });
 
-    const fetchMyOrder = async () => {
-        console.log(localStorage.getItem('userEmail'))
-        await fetch("http://localhost:5000/myorderdata", {
-            
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                email:localStorage.getItem('userEmail')
-            })
-        }).then(async (res) => {
-            let response = await res.json()
-            await setorderData(response)
-        })
+    // await res.map((data)=>{
+    //    console.log(data)
+    // })
+  };
 
+  useEffect(() => {
+    fetchMyOrder();
+  }, []);
 
-
-        // await res.map((data)=>{
-        //    console.log(data)
-        // })
-
-
-    }
-
-    useEffect(() => {
-        fetchMyOrder()
-    }, [])
-
-    return (
-        <div>
-            <div>
-                <Navbar />
-            </div>
-
-            <div className='container'>
-                <div className='row'>
-                {orderData !== {} ? Array(orderData).map(data => {
-  console.log('dataaaaaaaaa', data)
   return (
-    data.orderData ?
-      data.orderData.order_data.slice(0).reverse().map((item) => {
-        console.log('item', item)
-        if (Array.isArray(item)) {
-          return item.map((arrayData) => {
-            return (
-              <div>
-                {arrayData.Order_date ? (
-                  <div className='m-auto mt-5'>
-                    {data = arrayData.Order_date}
-                    <hr />
+    <div>
+      <div>
+        <Navbar />
+      </div>
+
+      <div className="container">
+        <div className="row">
+          {console.log("orderData", orderData)}
+          <span>{moment(orderData?.order_date).format('DD-MM-YYYY HH:mm:ss')}</span>
+          {orderData &&
+            orderData?.order_data?.map((item) => (
+              <div className='col-12 col-md-6 col-lg-3' >
+              <div className="card mt-3" style={{ width: "16rem", maxHeight: "360px" }}>
+                  <img src={item.img} className="card-img-top" alt="..." style={{ height: "120px", objectFit: "fill" }} />
+                  <div className="card-body">
+                      <h5 className="card-title">{item.name}</h5>
+                      <div className='container w-100 p-0' style={{ height: "38px" }}>
+                          <span className='m-1'>{item.qty}</span>
+                          <span className='m-1'>{item.size}</span>
+                          {/* <span className='m-1'>{data}</span> */}
+                          <div className=' d-inline ms-2 h-100 w-20 fs-5' >
+                              ₹{item.price}/-
+                          </div>
+                      </div>
                   </div>
-                ) : (
-                  <div className='col-12 col-md-6 col-lg-3'>
-                    {/* Rest of your card rendering code */}
-                  </div>
-                )}
               </div>
-            )
-          });
-        } else {
-          // Handle the case where item is not an array
-          return null; // or any other appropriate action
-        }
-      }) : ""
-  )
-}) : ""}
+
+          </div>
+            ))}
 
 
-                </div>
-
-
-            </div>
-
-            <Footer />
         </div>
-    )
+      </div>
+
+      <Footer />
+    </div>
+  );
 }
