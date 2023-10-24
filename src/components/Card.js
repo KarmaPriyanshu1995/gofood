@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import pizza from '../assets/images/pizza.jpeg'
 import { useCart, useDispatchCart } from './contexReducer'
 export default function Card(props) {
   let dispatch = useDispatchCart();
@@ -10,7 +9,6 @@ export default function Card(props) {
   let data = useCart()
   const [qty, setQty] = useState(1)
   const [size, setSize] = useState("")
-  console.log("dataaaaa", data)
   const handleAddToCart = async () => {
     let food = []
     console.log('data1234>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data)
